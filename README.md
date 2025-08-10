@@ -29,7 +29,7 @@ Uses a `Map<Long, Orders>` in memory to store orders without a database.
 
 ```bash
 # 1️⃣ Clone the repository
-git clone https://github.com/your-username/online-food-tracker.git
+git clone https://github.com/Ryzenworks/SpringBoot-OnlineFoodTracker
 cd online-food-tracker
 
 # 2️⃣ Build and run the application
