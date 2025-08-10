@@ -17,7 +17,7 @@ Uses a `Map<Long, Orders>` in memory to store orders without a database.
 
 ## 🛠️ Tech Stack
 
-- **Java 17+**
+- **Java 8+**
 - **Spring Boot**
 - **Maven**
 - **REST API**
