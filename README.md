@@ -95,6 +95,4 @@ mvn clean install
 mvn spring-boot:run
 ```
 ```
-
-You can save this as a README.md file in your project root directory.
         
