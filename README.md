@@ -1,85 +1,100 @@
-# 🍔 Online Food Tracker
 
-A **Spring Boot REST API** to manage food orders — including placing, updating, searching, and cancelling orders.
-Initially built with an in-memory `Map<Long, Orders>`, the project has now been **refactored with proper layers (Controller, Service, Model)** for scalability.
+# Online Food Tracker
 
----
+## Overview
+Online Food Tracker is a Spring Boot application that provides a comprehensive platform for tracking and managing food orders. The system allows users to place orders, track their status, and manage their profiles securely.
 
-## 🚀 Features
+## Technologies Used
+- Java 8
+- Spring Boot 2.7
+- MongoDB Atlas Cloud
+- Spring Security
+- Maven
+- Spring Data MongoDB
 
-* **Place Orders** – Add customer name, food items, and initial status.
-* **View Orders** – Retrieve all orders or filter by ID/Customer Name.
-* **Update Status** – Change the order’s progress (e.g., *Pending → Confirmed → Delivered*).
-* **Cancel Orders** – Remove an order from the tracker.
-* **Layered Architecture** – Uses **Controller–Service–Model** instead of direct in-memory map calls.
-* **Clean Code** – Package structure refactored for maintainability.
+## Features
 
----
+### User Management
+- **User Registration**: Create new user accounts securely
+- **Authentication**: Secure login with Spring Security and BCrypt password encryption
+- **Profile Management**: Users can view and update their profile information
+- **Account Deletion**: Users can delete their accounts when needed
 
-## 🛠️ Tech Stack
+### Order Management
+- **Place Orders**: Users can create new food orders with multiple items
+- **Track Order Status**: Orders can be tracked through various states:
+  - PLACED
+  - COOKING
+  - OUT_FOR_DELIVERY
+  - DELIVERED
+- **Order History**: Users can view their complete order history
+- **Order Updates**: Modify existing orders (items, customer name)
+- **Order Cancellation**: Cancel orders that haven't been delivered
 
-* **Java 8+**
-* **Spring Boot 3.x**
-* **Maven**
-* **REST API (JSON responses)**
-* In-Memory Storage (Map) – Database support can be added later
+### Security Features
+- **BCrypt Password Encryption**: Secure storage of user credentials
+- **HTTP Basic Authentication**: Stateless authentication mechanism
+- **CSRF Protection**: Protection against Cross-Site Request Forgery attacks
+- **Endpoint Security**: Role-based access control for API endpoints
 
----
+## API Endpoints
 
-## 📂 Project Structure
-
+### Public Endpoints
 ```
-SpringBoot-OnlineFoodTracker/
- ├── src/main/java/com/ryzenworks/foodtracker
- │    ├── controller/     # REST Controllers
- │    ├── service/        # Business Logic
- │    ├── model/          # Order Entity
- │    └── OnlineFoodTrackerApplication.java
- ├── src/test/java/...    # Unit tests
- ├── pom.xml
- └── README.md
+GET /public/health-check: Check if the application is running
+POST /public/create-user: Register a new user
+GET /public/search/name/{userName}: Search for a user by username
 ```
 
----
+### User Endpoints (Authenticated)
+```
+GET /users/get-user-details: Get current user details
+PUT /users: Update user information
+DELETE /users/delete-user: Delete current user account
+```
 
-## 📦 Installation & Setup
+### Order Endpoints (Authenticated)
+```
+GET /orders/{userName}: Get all orders for a user
+POST /orders/{userName}: Place a new order
+GET /orders/search/id/{orderId}: Get a specific order by ID
+PUT /orders/update/{userName}/{orderId}: Update an existing order
+DELETE /orders/cancel/{userName}/{orderId}: Cancel an order
+```
 
+## Technical Implementation
+- **MongoDB Transactions**: Ensures data consistency across operations
+- **RESTful API Design**: Well-structured endpoints following REST principles
+- **Document-based Data Model**: Efficient schema design for MongoDB
+- **Exception Handling**: Comprehensive error handling with appropriate HTTP status codes
+- **Stateless Architecture**: Designed for scalability
+
+## Setup and Installation
+
+### Prerequisites
+- Java 8 or higher
+- Maven
+- MongoDB Atlas account (or local MongoDB instance)
+
+### Configuration
+Update the `application.properties` file with your MongoDB connection details:
+
+```properties
+spring.data.mongodb.uri=your_mongodb_connection_string
+spring.data.mongodb.database=your_database_name
+spring.data.mongodb.auto-index-creation=true
+```
+
+### Building the Application
 ```bash
-# 1️⃣ Clone the repository
-git clone https://github.com/Ryzenworks/SpringBoot-OnlineFoodTracker.git
-cd SpringBoot-OnlineFoodTracker
+mvn clean install
+```
 
-# 2️⃣ Build and run the application
+### Running the Application
+```bash
 mvn spring-boot:run
 ```
-
----
-
-## 🔑 API Endpoints
-
-| Method | Endpoint                | Description              |
-| ------ | ----------------------- | ------------------------ |
-| POST   | `/orders`               | Place a new order        |
-| GET    | `/orders`               | Get all orders           |
-| GET    | `/orders/{id}`          | Get order by ID          |
-| GET    | `/orders/search/{name}` | Search order by customer |
-| PUT    | `/orders/{id}`          | Update order status      |
-| DELETE | `/orders/{id}`          | Cancel an order          |
-
----
-
-## ✅ Example Request
-
-**Create an Order**
-
-```http
-POST /orders
-Content-Type: application/json
-
-{
-  "customerName": "John Doe",
-  "items": ["Burger", "Fries"],
-  "status": "Pending"
-}
 ```
 
+You can save this as a README.md file in your project root directory.
+        
