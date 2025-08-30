@@ -43,7 +43,6 @@ Online Food Tracker is a Spring Boot application that provides a comprehensive p
 ```
 GET /public/health-check: Check if the application is running
 POST /public/create-user: Register a new user
-GET /public/search/name/{userName}: Search for a user by username
 ```
 
 ### User Endpoints (Authenticated)
