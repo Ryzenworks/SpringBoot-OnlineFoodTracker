@@ -1,40 +1,39 @@
 # 🍽️ Online Food Tracker
 
-A **RESTful Food Order Tracking System** built with **Spring Boot** and **MongoDB Atlas**, designed to demonstrate secure, scalable backend development practices.  
+A **RESTful Food Order Tracking System** built with **Spring Boot** and **MongoDB Atlas**, designed to demonstrate secure, scalable backend development practices.
 
 ---
 
 ## 🚀 Features
 
-- **User Management**
-  - Register new users with secure password handling (BCrypt)
-  - Authentication & role-based authorization
-  - Profile updates
+* **User Management**
 
-- **Order Processing**
-  - Place, track, and update orders
-  - Status lifecycle: `PLACED → COOKING → OUT_FOR_DELIVERY → DELIVERED`
-  - Fetch orders by ID or by customer name
+  * Secure user registration with BCrypt
+  * Authentication & role-based authorization
+  * Profile updates and account deletion
 
-- **Admin Dashboard**
-  - Manage users and orders
-  - Role-based restricted endpoints
+* **Order Processing**
 
-- **Security**
-  - Spring Security with BCrypt password encryption
-  - Role-Based Access Control (RBAC)
-  - Stateless authentication (sessionless API design)
-  - CSRF protection disabled for API usage
+  * Place and manage orders linked to a user
+  * Status lifecycle: `PLACED → COOKING → OUT_FOR_DELIVERY → DELIVERED`
+  * Fetch orders by ID or by associated user
+
+* **Security**
+
+  * Spring Security with BCrypt password hashing
+  * Role-Based Access Control (RBAC)
+  * Stateless API authentication
+  * CSRF disabled for REST API usage
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Spring Boot 2.7  
-- **Database**: MongoDB Atlas (previously local MongoDB)  
-- **Security**: Spring Security with BCrypt  
-- **API Design**: RESTful architecture with clean endpoint design  
-- **Build Tool**: Maven  
+* **Backend**: Spring Boot 2.7
+* **Database**: MongoDB Atlas (cloud)
+* **Security**: Spring Security with BCrypt
+* **API Design**: RESTful principles with `@RestController`
+* **Build Tool**: Maven
 
 ---
 
@@ -56,37 +55,41 @@ OnlineFoodTracker/
 
 ---
 
-## 📌 API Endpoints (Sample)
+## 📌 API Endpoints (Key)
 
-### 👤 User
-- `POST /users/register` → Register a new user  
-- `POST /users/login` → Login with username & password  
-- `PUT /users/update/{userName}` → Update user profile  
+### 🔓 Public
+
+* `GET /public/health-check` → App health status
+* `POST /public/create-user` → Register a new user
+* `GET /public/search/name/{userName}` → Search user by username
+
+### 👤 Users (Authenticated)
+
+* `GET /users/get-user-details` → Get logged-in user details
+* `PUT /users` → Update logged-in user details
+* `DELETE /users/delete-user` → Delete logged-in user
 
 ### 📦 Orders
-- `POST /orders` → Place a new order  
-- `GET /orders/{id}` → Get order by ID  
-- `GET /orders/customer/{name}` → Get orders by customer name  
-- `PUT /orders/{id}/status` → Update order status  
+
+* `GET /orders/{userName}` → View all orders for a user
+* `POST /orders/{userName}` → Place a new order for a user
+* `GET /orders/search/id/{orderId}` → Fetch specific order by ID
+* `PUT /orders/update/{userName}/{orderId}` → Update an order
+* `DELETE /orders/cancel/{userName}/{orderId}` → Cancel an order
 
 ---
 
 ## ⚡ Challenges & Solutions
 
-- **BCrypt Password Mismatch** → Fixed by ensuring consistent hashing  
-- **CSRF Blocking APIs** → Disabled CSRF for APIs, since authentication is stateless  
-- **MongoDB Atlas Connection Errors** → Solved by IP whitelisting & proper URI configuration  
-- **Spring Data Queries Confusion** → Learned how Spring auto-generates queries (List vs Optional return types)  
+* **BCrypt Password Mismatch** → Fixed by enforcing consistent hashing strategy
+* **CSRF Blocking APIs** → Disabled CSRF for stateless REST APIs
+* **MongoDB Atlas Connection Issues** → Solved with proper SRV URI and IP whitelisting
+* **Query Confusion** → Learned how Spring Data auto-generates queries based on method names
 
 ---
 
-## 🎯 Future Enhancements
-
-- JWT Authentication for secure token-based login  
-- Email notifications for order updates  
-- Docker support for deployment  
-- Frontend client for order placement & tracking  
-
-
 ## 🏷️ Tags
+
 `Spring Boot` `MongoDB` `Spring Security` `REST API` `Java` `Backend Development` `Microservices`
+
+---
