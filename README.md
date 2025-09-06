@@ -1,97 +1,92 @@
+# 🍽️ Online Food Tracker
 
-# Online Food Tracker
+A **RESTful Food Order Tracking System** built with **Spring Boot** and **MongoDB Atlas**, designed to demonstrate secure, scalable backend development practices.  
 
-## Overview
-Online Food Tracker is a Spring Boot application that provides a comprehensive platform for tracking and managing food orders. The system allows users to place orders, track their status, and manage their profiles securely.
+---
 
-## Technologies Used
-- Java 8
-- Spring Boot 2.7
-- MongoDB Atlas Cloud
-- Spring Security
-- Maven
-- Spring Data MongoDB
+## 🚀 Features
 
-## Features
+- **User Management**
+  - Register new users with secure password handling (BCrypt)
+  - Authentication & role-based authorization
+  - Profile updates
 
-### User Management
-- **User Registration**: Create new user accounts securely
-- **Authentication**: Secure login with Spring Security and BCrypt password encryption
-- **Profile Management**: Users can view and update their profile information
-- **Account Deletion**: Users can delete their accounts when needed
+- **Order Processing**
+  - Place, track, and update orders
+  - Status lifecycle: `PLACED → COOKING → OUT_FOR_DELIVERY → DELIVERED`
+  - Fetch orders by ID or by customer name
 
-### Order Management
-- **Place Orders**: Users can create new food orders with multiple items
-- **Track Order Status**: Orders can be tracked through various states:
-  - PLACED
-  - COOKING
-  - OUT_FOR_DELIVERY
-  - DELIVERED
-- **Order History**: Users can view their complete order history
-- **Order Updates**: Modify existing orders (items, customer name)
-- **Order Cancellation**: Cancel orders that haven't been delivered
+- **Admin Dashboard**
+  - Manage users and orders
+  - Role-based restricted endpoints
 
-### Security Features
-- **BCrypt Password Encryption**: Secure storage of user credentials
-- **HTTP Basic Authentication**: Stateless authentication mechanism
-- **CSRF Protection**: Protection against Cross-Site Request Forgery attacks
-- **Endpoint Security**: Role-based access control for API endpoints
+- **Security**
+  - Spring Security with BCrypt password encryption
+  - Role-Based Access Control (RBAC)
+  - Stateless authentication (sessionless API design)
+  - CSRF protection disabled for API usage
 
-## API Endpoints
+---
 
-### Public Endpoints
+## 🛠️ Tech Stack
+
+- **Backend**: Spring Boot 2.7  
+- **Database**: MongoDB Atlas (previously local MongoDB)  
+- **Security**: Spring Security with BCrypt  
+- **API Design**: RESTful architecture with clean endpoint design  
+- **Build Tool**: Maven  
+
+---
+
+## 📂 Project Structure
+
 ```
-GET /public/health-check: Check if the application is running
-POST /public/create-user: Register a new user
-```
-
-### User Endpoints (Authenticated)
-```
-GET /users/get-user-details: Get current user details
-PUT /users: Update user information
-DELETE /users/delete-user: Delete current user account
-```
-
-### Order Endpoints (Authenticated)
-```
-GET /orders/{userName}: Get all orders for a user
-POST /orders/{userName}: Place a new order
-GET /orders/search/id/{orderId}: Get a specific order by ID
-PUT /orders/update/{userName}/{orderId}: Update an existing order
-DELETE /orders/cancel/{userName}/{orderId}: Cancel an order
+OnlineFoodTracker/
+ ┣ src/main/java/com/mohammedmaroof/onlinefoodtracker
+ ┃ ┣ Controllers/      # REST Controllers
+ ┃ ┣ entity/           # Entities (User, Order, etc.)
+ ┃ ┣ repository/       # Spring Data MongoDB Repositories
+ ┃ ┣ services/         # Business logic
+ ┃ ┣ config/           # Security configuration
+ ┃ ┗ FoodTrackerApplication.java
+ ┣ src/main/resources
+ ┃ ┗ application.properties
+ ┣ pom.xml
 ```
 
-## Technical Implementation
-- **MongoDB Transactions**: Ensures data consistency across operations
-- **RESTful API Design**: Well-structured endpoints following REST principles
-- **Document-based Data Model**: Efficient schema design for MongoDB
-- **Exception Handling**: Comprehensive error handling with appropriate HTTP status codes
-- **Stateless Architecture**: Designed for scalability
+---
 
-## Setup and Installation
+## 📌 API Endpoints (Sample)
 
-### Prerequisites
-- Java 8 or higher
-- Maven
-- MongoDB Atlas account (or local MongoDB instance)
+### 👤 User
+- `POST /users/register` → Register a new user  
+- `POST /users/login` → Login with username & password  
+- `PUT /users/update/{userName}` → Update user profile  
 
-### Configuration
-Update the `application.properties` file with your MongoDB connection details:
+### 📦 Orders
+- `POST /orders` → Place a new order  
+- `GET /orders/{id}` → Get order by ID  
+- `GET /orders/customer/{name}` → Get orders by customer name  
+- `PUT /orders/{id}/status` → Update order status  
 
-```properties
-spring.data.mongodb.uri=your_mongodb_connection_string
-spring.data.mongodb.database=your_database_name
-spring.data.mongodb.auto-index-creation=true
-```
+---
 
-### Building the Application
-```bash
-mvn clean install
-```
+## ⚡ Challenges & Solutions
 
-### Running the Application
-```bash
-mvn spring-boot:run
-```
+- **BCrypt Password Mismatch** → Fixed by ensuring consistent hashing  
+- **CSRF Blocking APIs** → Disabled CSRF for APIs, since authentication is stateless  
+- **MongoDB Atlas Connection Errors** → Solved by IP whitelisting & proper URI configuration  
+- **Spring Data Queries Confusion** → Learned how Spring auto-generates queries (List vs Optional return types)  
 
-        
+---
+
+## 🎯 Future Enhancements
+
+- JWT Authentication for secure token-based login  
+- Email notifications for order updates  
+- Docker support for deployment  
+- Frontend client for order placement & tracking  
+
+
+## 🏷️ Tags
+`Spring Boot` `MongoDB` `Spring Security` `REST API` `Java` `Backend Development` `Microservices`
